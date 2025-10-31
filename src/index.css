@@ -4,12 +4,12 @@
 @plugin "daisyui" {
 	themes: light --default;
 }
-@plugin "daisyui/theme" {
-	--color-primary: #001931;
-	--color-secondary: rgb(0, 25, 49, 0.5);
-}
 
 @layer base {
+	:root {
+		--color-primary: #001931;
+		--color-secondary: rgb(0, 25, 49, 0.5);
+	}
 	.container {
 		max-width: 100%;
 		padding-left: 15px;

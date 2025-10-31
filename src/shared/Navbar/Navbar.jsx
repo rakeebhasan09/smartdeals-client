@@ -86,20 +86,26 @@ const Navbar = () => {
 					</div>
 					{/* Navbar Center */}
 					<div className="navbar-center hidden lg:flex">
-						<ul className="menu menu-horizontal gap-8 p-0">
+						<ul className="menu menu-horizontal gap-5 xl:gap-8 p-0">
 							{menuLinks}
 						</ul>
 					</div>
 					{/* Navbar End */}
 					<div className="navbar-end">
-						<ul className="flex items-center gap-4">
+						<ul className="flex items-center gap-2 xl:gap-4">
 							<li>
-								<Link className="w-[100px] block text-center py-3 font-semibold gradient-text border border-[#632EE3] rounded">
+								<Link
+									to="/login"
+									className="w-[100px] block text-center py-3 font-semibold gradient-text border border-[#632EE3] rounded"
+								>
 									Login
 								</Link>
 							</li>
-							<li className="hidden sm:block">
-								<Link className="w-[120px] block bg-[linear-gradient(125deg,#632EE3_5.68%,#9F62F2_88.38%)] text-white text-center py-3 font-semibold rounded">
+							<li className="hidden xl:block">
+								<Link
+									to="/register"
+									className="w-[120px] block bg-[linear-gradient(125deg,#632EE3_5.68%,#9F62F2_88.38%)] text-white text-center py-3 font-semibold rounded"
+								>
 									Register
 								</Link>
 							</li>
