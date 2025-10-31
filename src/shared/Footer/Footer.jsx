@@ -21,7 +21,7 @@ const Footer = () => {
 							Bangladesh.
 						</p>
 					</div>
-					<div className="col-span-12 lg:col-span-9 mt-5">
+					<div className="col-span-12 lg:col-span-9 mt-5 lg:mt-0">
 						<div className="grid grid-cols-1 md:grid-cols-12">
 							{/* Footer Links */}
 							<div className="md:col-span-5 lg:col-span-5">

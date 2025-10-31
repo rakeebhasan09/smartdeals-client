@@ -1,8 +1,13 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import Navbar from "../shared/Navbar/Navbar";
 import Footer from "../shared/Footer/Footer";
 
 const Root = () => {
+	const location = useLocation();
+	// Hide footer on specific routes
+	const hideFooterRoutes = ["/login", "/register"];
+	const shouldHideFooter = hideFooterRoutes.includes(location.pathname);
+
 	return (
 		<>
 			<section>
@@ -11,9 +16,11 @@ const Root = () => {
 			<main>
 				<Outlet />
 			</main>
-			<section>
-				<Footer />
-			</section>
+			{!shouldHideFooter && (
+				<section>
+					<Footer />
+				</section>
+			)}
 		</>
 	);
 };

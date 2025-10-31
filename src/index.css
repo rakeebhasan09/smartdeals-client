@@ -47,6 +47,7 @@ body {
 	font-size: 16px;
 	font-weight: 400;
 	background: #f5f5f5;
+	min-height: 100vh;
 }
 
 .gradient-text,
@@ -55,4 +56,8 @@ body {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+button {
+	cursor: pointer;
 }
