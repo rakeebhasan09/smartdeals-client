@@ -1,9 +1,11 @@
 const LeftSide = ({ product }) => {
-	const { condition, usage, description } = product;
+	const { condition, usage, description, image } = product;
 	return (
 		<div>
 			{/* Photo */}
-			<div className="h-[250px] md:h-[350px] lg:h-[500px] bg-[#D9D9D9] rounded-lg"></div>
+			<div className="rounded-lg overflow-hidden">
+				<img src={image} alt="" />
+			</div>
 			{/* Describetions */}
 			<div className="p-6 bg-white rounded-lg mt-[30px] flex flex-col gap-6">
 				<h2 className="text-[24px] font-semibold leading-[100%]">
