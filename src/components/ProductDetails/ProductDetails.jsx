@@ -4,7 +4,6 @@ import RightSide from "./RightSide";
 
 const ProductDetails = () => {
 	const product = useLoaderData();
-	console.log(product);
 	return (
 		<main>
 			{/* Product Detail Area */}

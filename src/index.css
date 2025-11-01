@@ -89,3 +89,7 @@ body {
 button {
 	cursor: pointer;
 }
+
+.modal.modal-bottom {
+	background: rgba(0, 25, 49, 0.8);
+}

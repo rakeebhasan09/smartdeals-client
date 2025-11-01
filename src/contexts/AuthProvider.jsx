@@ -14,11 +14,13 @@ const AuthProvider = ({ children }) => {
 	// Login With Google
 	const googleProvider = new GoogleAuthProvider();
 	const googleLogin = () => {
+		setLoading(true);
 		return signInWithPopup(auth, googleProvider);
 	};
 
 	// Logout
 	const logOut = () => {
+		setLoading(true);
 		return signOut(auth);
 	};
 

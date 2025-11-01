@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import AllProducts from "./components/AllProducts/AllProducts";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import CreateProduct from "./components/CreateProduct/CreateProduct";
 
 const router = createBrowserRouter([
 	{
@@ -42,6 +43,14 @@ const router = createBrowserRouter([
 				element: (
 					<PrivateRoute>
 						<ProductDetails />
+					</PrivateRoute>
+				),
+			},
+			{
+				path: "create-product",
+				element: (
+					<PrivateRoute>
+						<CreateProduct />
 					</PrivateRoute>
 				),
 			},
