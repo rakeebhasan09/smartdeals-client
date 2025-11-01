@@ -7,6 +7,10 @@ import Root from "./layOuts/Root";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import AuthProvider from "./contexts/AuthProvider";
+import { ToastContainer } from "react-toastify";
+import AllProducts from "./components/AllProducts/AllProducts";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
 
 const router = createBrowserRouter([
 	{
@@ -25,12 +29,26 @@ const router = createBrowserRouter([
 				path: "/register",
 				Component: Register,
 			},
+			{
+				path: "all-products",
+				loader: () => fetch("http://localhost:3000/products"),
+				Component: AllProducts,
+			},
+			{
+				path: "product-details/:id",
+				loader: ({ params }) =>
+					fetch(`http://localhost:3000/products/${params.id}`),
+				Component: ProductDetails,
+			},
 		],
 	},
 ]);
 
 createRoot(document.getElementById("root")).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<AuthProvider>
+			<RouterProvider router={router} />
+			<ToastContainer />
+		</AuthProvider>
 	</StrictMode>
 );

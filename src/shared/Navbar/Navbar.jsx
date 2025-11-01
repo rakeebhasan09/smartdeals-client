@@ -1,6 +1,20 @@
+import { use } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+	const { user, logOut } = use(AuthContext);
+
+	const handleLogOut = () => {
+		logOut()
+			.then(() => {
+				toast.success("Logged Out");
+			})
+			.then((error) => {
+				console.log(error);
+			});
+	};
 	const menuLinks = (
 		<>
 			<li>
@@ -92,48 +106,55 @@ const Navbar = () => {
 					</div>
 					{/* Navbar End */}
 					<div className="navbar-end">
-						<ul className="flex items-center gap-2 xl:gap-4">
-							<li>
-								<Link
-									to="/login"
-									className="w-[100px] block text-center py-3 font-semibold gradient-text border border-[#632EE3] rounded"
+						{user ? (
+							<div className="dropdown dropdown-end">
+								<div
+									tabIndex={0}
+									role="button"
+									className="avatar"
 								>
-									Login
-								</Link>
-							</li>
-							<li className="hidden xl:block">
-								<Link
-									to="/register"
-									className="w-[120px] block bg-[linear-gradient(125deg,#632EE3_5.68%,#9F62F2_88.38%)] text-white text-center py-3 font-semibold rounded"
-								>
-									Register
-								</Link>
-							</li>
-						</ul>
-						{/* <div className="dropdown dropdown-end">
-							<div tabIndex={0} role="button" className="avatar">
-								<div className="w-[43px] h-[43px] rounded-full">
-									<img
-										alt="Tailwind CSS Navbar component"
-										src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-									/>
+									<div className="w-[43px] h-[43px] rounded-full">
+										<img
+											alt="Tailwind CSS Navbar component"
+											src={user.photoURL}
+										/>
+									</div>
 								</div>
+								<ul
+									tabIndex="-1"
+									className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+								>
+									<li>
+										<a>{user.displayName}</a>
+									</li>
+									<li>
+										<a>{user.email}</a>
+									</li>
+									<li>
+										<a onClick={handleLogOut}>Logout</a>
+									</li>
+								</ul>
 							</div>
-							<ul
-								tabIndex="-1"
-								className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-							>
+						) : (
+							<ul className="flex items-center gap-2 xl:gap-4">
 								<li>
-									<a>Profile</a>
+									<Link
+										to="/login"
+										className="w-[100px] block text-center py-2.5 font-semibold gradient-text border border-[#632EE3] rounded"
+									>
+										Login
+									</Link>
 								</li>
-								<li>
-									<a>Settings</a>
-								</li>
-								<li>
-									<a>Logout</a>
+								<li className="hidden xl:block">
+									<Link
+										to="/register"
+										className="w-[120px] block bg-[linear-gradient(125deg,#632EE3_5.68%,#9F62F2_88.38%)] text-white text-center py-3 font-semibold rounded"
+									>
+										Register
+									</Link>
 								</li>
 							</ul>
-						</div> */}
+						)}
 					</div>
 				</div>
 			</div>

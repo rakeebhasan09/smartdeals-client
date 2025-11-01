@@ -1,6 +1,21 @@
+import { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+	const { googleLogin } = use(AuthContext);
+	const handelGoogleLogin = () => {
+		googleLogin()
+			.then((result) => {
+				if (result.user) {
+					toast.success("Login Successfull.");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 	return (
 		<section className="py-10 md:py-20 lg:py-[143px]">
 			<div className="container">
@@ -43,7 +58,10 @@ const Login = () => {
 						</fieldset>
 						<div className="divider">OR</div>
 						{/* Google */}
-						<button className="btn bg-white text-black border-[#e5e5e5]">
+						<button
+							onClick={handelGoogleLogin}
+							className="btn bg-white text-black border-[#e5e5e5]"
+						>
 							<svg
 								aria-label="Google logo"
 								width="16"

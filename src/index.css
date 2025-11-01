@@ -9,6 +9,11 @@
 	:root {
 		--color-primary: #001931;
 		--color-secondary: rgb(0, 25, 49, 0.5);
+		--bg-gradient: linear-gradient(
+			125deg,
+			rgba(99, 46, 227, 0.15) 5.68%,
+			rgba(159, 98, 242, 0.15) 88.38%
+		);
 	}
 	.container {
 		max-width: 100%;
@@ -51,11 +56,34 @@ body {
 }
 
 .gradient-text,
-.menu-horizontal li a.active {
+.menu-horizontal li a.active,
+.my-btn {
 	background: linear-gradient(125deg, #632ee3 5.68%, #9f62f2 88.38%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+.my-btn {
+	@apply py-3 px-4 rounded border border-[#632EE3] h-12 flex items-center justify-center font-semibold;
+}
+
+.card-basic {
+	@apply p-6 bg-white rounded-lg;
+}
+
+.by-product-btn {
+	border-radius: 4px;
+	background: linear-gradient(125deg, #632ee3 5.68%, #9f62f2 88.38%);
+	display: flex;
+	width: 100%;
+	height: 60px;
+	padding: 12px 16px;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 20px;
+	font-weight: 600;
 }
 
 button {
