@@ -1,15 +1,18 @@
 import { use } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
 	const { googleLogin } = use(AuthContext);
+	const location = useLocation();
+	const navigate = useNavigate();
 	const handelGoogleLogin = () => {
 		googleLogin()
 			.then((result) => {
 				if (result.user) {
 					toast.success("Login Successfull.");
+					navigate(location?.state || "/");
 				}
 			})
 			.catch((error) => {

@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router";
 import Navbar from "../shared/Navbar/Navbar";
 import Footer from "../shared/Footer/Footer";
+import ScrollTop from "../components/ScrollTop/ScrollTop";
 
 const Root = () => {
 	const location = useLocation();
@@ -10,6 +11,7 @@ const Root = () => {
 
 	return (
 		<>
+			<ScrollTop />
 			<section>
 				<Navbar />
 			</section>

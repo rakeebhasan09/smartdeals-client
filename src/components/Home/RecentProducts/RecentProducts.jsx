@@ -18,7 +18,7 @@ const RecentProducts = ({ recentProductsPromise }) => {
 				</div>
 				<div className="mt-10 text-center">
 					<Link
-						to="/register"
+						to="/all-products"
 						className="w-[120px] block mx-auto bg-[linear-gradient(125deg,#632EE3_5.68%,#9F62F2_88.38%)] text-white text-center py-3 font-semibold rounded"
 					>
 						Show All
