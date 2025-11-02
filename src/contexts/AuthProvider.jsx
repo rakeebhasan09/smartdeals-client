@@ -29,11 +29,13 @@ const AuthProvider = ({ children }) => {
 
 	// Email Password Login
 	const loginWithEmailPassword = (email, password) => {
+		setLoading(true);
 		return signInWithEmailAndPassword(auth, email, password);
 	};
 
 	// Update Profile
 	const updateUserProfile = (userInfo) => {
+		setLoading(true);
 		return updateProfile(auth.currentUser, userInfo);
 	};
 

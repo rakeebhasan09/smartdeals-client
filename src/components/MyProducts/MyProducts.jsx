@@ -1,5 +1,6 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const MyProducts = () => {
 	const { user } = use(AuthContext);
@@ -9,6 +10,39 @@ const MyProducts = () => {
 			.then((res) => res.json())
 			.then((data) => setMyProducts(data));
 	}, [user.email]);
+
+	// Handle Delete
+	const handleDeleteMyProdutcs = (id) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				fetch(`http://localhost:3000/products/${id}`, {
+					method: "delete",
+				})
+					.then((res) => res.json())
+					.then((data) => {
+						if (data.deletedCount) {
+							const remaining = myProducts.filter(
+								(myProduct) => myProduct._id !== id
+							);
+							setMyProducts(remaining);
+							Swal.fire({
+								title: "Deleted!",
+								text: "Your file has been deleted.",
+								icon: "success",
+							});
+						}
+					});
+			}
+		});
+	};
 	return (
 		<section className="py-10 md:py-14 lg:py-20">
 			<div className="container">
@@ -41,7 +75,7 @@ const MyProducts = () => {
 							{myProducts.length > 0 ? (
 								myProducts.map((item, index) => (
 									<tr
-										key={item.id}
+										key={item._id}
 										className="border-b border-b-[#E9E9E9] hover:bg-gray-50 transition duration-200"
 									>
 										<td className="py-3 px-4">
@@ -75,7 +109,14 @@ const MyProducts = () => {
 												<button className="border border-purple-600 text-purple-600 text-sm px-3 py-1 rounded hover:bg-purple-600 hover:text-white transition">
 													Edit
 												</button>
-												<button className="border border-red-500 text-red-500 text-sm px-3 py-1 rounded hover:bg-red-500 hover:text-white transition">
+												<button
+													onClick={() =>
+														handleDeleteMyProdutcs(
+															item._id
+														)
+													}
+													className="border border-red-500 text-red-500 text-sm px-3 py-1 rounded hover:bg-red-500 hover:text-white transition"
+												>
 													Delete
 												</button>
 												<button className="border border-green-500 text-green-500 text-sm px-3 py-1 rounded hover:bg-green-500 hover:text-white transition">
