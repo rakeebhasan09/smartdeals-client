@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyProducts = () => {
 	const { user } = use(AuthContext);
@@ -106,9 +107,12 @@ const MyProducts = () => {
 										</td>
 										<td className="py-3 px-4">
 											<p className="flex items-center justify-center gap-2">
-												<button className="border border-purple-600 text-purple-600 text-sm px-3 py-1 rounded hover:bg-purple-600 hover:text-white transition">
+												<Link
+													to={`/edit-product/${item._id}`}
+													className="border border-purple-600 text-purple-600 text-sm px-3 py-1 rounded hover:bg-purple-600 hover:text-white transition"
+												>
 													Edit
-												</button>
+												</Link>
 												<button
 													onClick={() =>
 														handleDeleteMyProdutcs(
