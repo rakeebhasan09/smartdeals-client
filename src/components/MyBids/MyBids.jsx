@@ -1,5 +1,6 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const MyBids = () => {
 	const [bids, setBids] = useState([]);
@@ -11,6 +12,39 @@ const MyBids = () => {
 				setBids(data);
 			});
 	}, [user.email]);
+
+	// Handle Remove Bid
+	const handleRemoveBid = (bidID) => {
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You won't be able to revert this!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				fetch(`http://localhost:3000/bids/${bidID}`, {
+					method: "delete",
+				})
+					.then((res) => res.json())
+					.then((data) => {
+						if (data.deletedCount) {
+							const rmaining = bids.filter(
+								(bid) => bid._id !== bidID
+							);
+							setBids(rmaining);
+							Swal.fire({
+								title: "Deleted!",
+								text: "Your file has been deleted.",
+								icon: "success",
+							});
+						}
+					});
+			}
+		});
+	};
 	return (
 		<section className="py-10 md:py-14 lg:py-20">
 			<div className="container">
@@ -54,7 +88,7 @@ const MyBids = () => {
 											<div className="w-[60px] h-10 bg-[#D9D9D9]"></div>
 											<div>
 												<p>Orange Juice</p>
-												<span>$22.5</span>
+												<span>{bid.product}</span>
 											</div>
 										</div>
 									</td>
@@ -78,7 +112,12 @@ const MyBids = () => {
 										</span>
 									</td>
 									<td className="px-4 py-3">
-										<button className="text-red-500 border border-red-400 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white transition">
+										<button
+											onClick={() =>
+												handleRemoveBid(bid._id)
+											}
+											className="text-red-500 border border-red-400 px-3 py-1 rounded-md hover:bg-red-500 hover:text-white transition"
+										>
 											Remove Bid
 										</button>
 									</td>

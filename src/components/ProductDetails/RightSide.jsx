@@ -66,6 +66,7 @@ const RightSide = ({ product }) => {
 				if (data.insertedId) {
 					e.target.reset();
 					bidModalRef.current.close();
+					navigate("/my-bids");
 					Swal.fire({
 						position: "center",
 						icon: "success",
