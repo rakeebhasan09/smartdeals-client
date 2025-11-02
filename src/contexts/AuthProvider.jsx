@@ -23,6 +23,7 @@ const AuthProvider = ({ children }) => {
 
 	// Email Password Register
 	const registerWithEmailPassword = (email, password) => {
+		setLoading(true);
 		return createUserWithEmailAndPassword(auth, email, password);
 	};
 
@@ -57,6 +58,7 @@ const AuthProvider = ({ children }) => {
 		loginWithEmailPassword,
 		updateUserProfile,
 		user,
+		setUser,
 		logOut,
 		loading,
 	};

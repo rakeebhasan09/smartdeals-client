@@ -1,13 +1,71 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { use, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const CreateProduct = () => {
-	const [condition, setCondition] = useState(null);
+	const { user } = use(AuthContext);
 
-	const handleSubmit = (e) => {
+	const [productCondition, setProductCondition] = useState(null);
+	const navigate = useNavigate();
+	const handleCreateProduct = (e) => {
 		e.preventDefault();
-		// handle your form logic here
-		console.log("Form submitted");
+		const title = e.target.title.value;
+		const price_min = e.target.price_min.value;
+		const price_max = e.target.price_max.value;
+		const email = e.target.seller_email.value;
+		const category = e.target.category.value;
+		const created_at = new Date();
+		const image = e.target.photo.value;
+		const status = "pending";
+		const location = e.target.location.value;
+		const seller_image = e.target.seller_image.value;
+		const seller_name = e.target.seller_name.value;
+		const condition = productCondition;
+		const usage = e.target.usage_time.value;
+		const description = e.target.description.value;
+		const seller_contact = e.target.seller_contact.value;
+
+		const newProduct = {
+			title,
+			price_min,
+			price_max,
+			email,
+			category,
+			created_at,
+			image,
+			status,
+			location,
+			seller_image,
+			seller_name,
+			condition,
+			usage,
+			description,
+			seller_contact,
+		};
+
+		// Send Product Server side
+		fetch("http://localhost:3000/products", {
+			method: "post",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify(newProduct),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.insertedId) {
+					e.target.reset();
+					navigate("/my-products");
+					Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "Your Product has been saved",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+				}
+			});
 	};
 
 	return (
@@ -26,7 +84,7 @@ const CreateProduct = () => {
 						<span className="text-purple-600">A Product</span>
 					</h2>
 
-					<form onSubmit={handleSubmit} className="space-y-5">
+					<form onSubmit={handleCreateProduct} className="space-y-5">
 						{/* Title & Category */}
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div>
@@ -37,18 +95,24 @@ const CreateProduct = () => {
 									type="text"
 									placeholder="e.g. Yamaha Fz Guitar for Sale"
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="title"
 								/>
 							</div>
 							<div>
 								<label className="block text-sm font-medium text-gray-700">
 									Category
 								</label>
-								<select className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none">
-									<option>Select a Category</option>
-									<option>Electronics</option>
-									<option>Vehicles</option>
-									<option>Furniture</option>
-									<option>Others</option>
+								<select
+									name="category"
+									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+								>
+									<option value="">Select a Category</option>
+									<option value="Electronics">
+										Electronics
+									</option>
+									<option value="Vehicles">Vehicles</option>
+									<option value="Furniture">Furniture</option>
+									<option value="Others">Others</option>
 								</select>
 							</div>
 						</div>
@@ -63,6 +127,7 @@ const CreateProduct = () => {
 									type="number"
 									placeholder="e.g. 18.5"
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="price_min"
 								/>
 							</div>
 							<div>
@@ -73,6 +138,7 @@ const CreateProduct = () => {
 									type="number"
 									placeholder="Optional (default = Min Price)"
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="price_max"
 								/>
 							</div>
 						</div>
@@ -88,9 +154,11 @@ const CreateProduct = () => {
 										<input
 											type="radio"
 											name="condition"
-											checked={condition === "brand"}
+											checked={
+												productCondition === "brand"
+											}
 											onChange={() =>
-												setCondition("brand")
+												setProductCondition("brand")
 											}
 											className="text-purple-600 "
 										/>
@@ -102,9 +170,11 @@ const CreateProduct = () => {
 										<input
 											type="radio"
 											name="condition"
-											checked={condition === "used"}
+											checked={
+												productCondition === "used"
+											}
 											onChange={() =>
-												setCondition("used")
+												setProductCondition("used")
 											}
 											className="text-purple-600 "
 										/>
@@ -122,6 +192,7 @@ const CreateProduct = () => {
 									type="text"
 									placeholder="e.g. 1 year 3 months"
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="usage_time"
 								/>
 							</div>
 						</div>
@@ -135,6 +206,7 @@ const CreateProduct = () => {
 								type="url"
 								placeholder="https://..."
 								className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+								name="photo"
 							/>
 						</div>
 
@@ -146,8 +218,10 @@ const CreateProduct = () => {
 								</label>
 								<input
 									type="text"
-									placeholder="e.g. Artisan Roasters"
+									defaultValue={user?.displayName}
+									readOnly
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="seller_name"
 								/>
 							</div>
 							<div>
@@ -156,8 +230,10 @@ const CreateProduct = () => {
 								</label>
 								<input
 									type="email"
-									placeholder="e.g. leila@gmail.com"
+									defaultValue={user?.email}
+									readOnly
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="seller_email"
 								/>
 							</div>
 						</div>
@@ -171,6 +247,7 @@ const CreateProduct = () => {
 									type="text"
 									placeholder="e.g. +1-555-1234"
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="seller_contact"
 								/>
 							</div>
 							<div>
@@ -179,8 +256,10 @@ const CreateProduct = () => {
 								</label>
 								<input
 									type="url"
-									placeholder="https://..."
+									defaultValue={user?.photoURL}
+									readOnly
 									className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+									name="seller_image"
 								/>
 							</div>
 						</div>
@@ -194,6 +273,7 @@ const CreateProduct = () => {
 								type="text"
 								placeholder="City, Country"
 								className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+								name="location"
 							/>
 						</div>
 
@@ -206,6 +286,7 @@ const CreateProduct = () => {
 								placeholder="e.g. I bought this product 3 months ago..."
 								rows="3"
 								className="w-full mt-1 px-3 py-2 border rounded-md focus:outline-none"
+								name="description"
 							></textarea>
 						</div>
 

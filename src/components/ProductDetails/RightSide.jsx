@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import { use, useRef } from "react";
 import { HiOutlineArrowLeft } from "react-icons/hi2";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const RightSide = ({ product }) => {
+	const { user } = use(AuthContext);
 	const {
 		_id,
 		title,
@@ -167,7 +169,8 @@ const RightSide = ({ product }) => {
 										</label>
 										<input
 											type="text"
-											placeholder="Your name"
+											defaultValue={user.displayName}
+											readOnly
 											className="py-2 px-3 border border-[#E9E9E9] rounded w-full outline-none"
 											name="name"
 										/>
@@ -178,7 +181,8 @@ const RightSide = ({ product }) => {
 										</label>
 										<input
 											type="email"
-											placeholder="Your Email"
+											defaultValue={user.email}
+											readOnly
 											className="py-2 px-3 border border-[#E9E9E9] rounded w-full outline-none"
 											name="email"
 										/>
@@ -191,7 +195,8 @@ const RightSide = ({ product }) => {
 									</label>
 									<input
 										type="text"
-										placeholder="https://...your_img_url"
+										defaultValue={user.photoURL}
+										readOnly
 										className="py-2 px-3 border border-[#E9E9E9] rounded w-full outline-none"
 										name="photo"
 									/>

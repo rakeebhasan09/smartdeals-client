@@ -74,7 +74,7 @@ const ProductDetails = () => {
 												<div className="flex items-center gap-3">
 													<div className="w-[60px] h-10 bg-[#D9D9D9]"></div>
 													<div>
-														<p>Orange Juice</p>
+														<p>{bid.buyer_name}</p>
 														<span>
 															{bid.product}
 														</span>

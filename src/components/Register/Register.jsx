@@ -8,7 +8,8 @@ import GoogleLogin from "../../shared/GoogleLogin/GoogleLogin";
 const Register = () => {
 	const [show, setShow] = useState(false);
 	const navigate = useNavigate();
-	const { registerWithEmailPassword, updateUserProfile } = use(AuthContext);
+	const { registerWithEmailPassword, updateUserProfile, setUser } =
+		use(AuthContext);
 
 	// Handle Registration
 	const handleRegistration = (e) => {
@@ -24,10 +25,14 @@ const Register = () => {
 					updateUserProfile({
 						displayName: name,
 						photoURL: photo,
+					}).then(() => {
+						(result.user.displayName = name),
+							(result.user.photoURL = photo),
+							setUser(result.user);
+						toast.success("Registration complete.");
+						e.target.reset();
+						navigate("/");
 					});
-					toast.success("Registration complete.");
-					e.target.reset();
-					navigate("/");
 				}
 			})
 			.catch((error) => {
