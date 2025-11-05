@@ -1,22 +1,30 @@
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyBids = () => {
 	const [bids, setBids] = useState([]);
 	const { user } = use(AuthContext);
+	const axiosSecure = useAxiosSecure();
 
 	useEffect(() => {
-		fetch(`http://localhost:3000/bids?email=${user.email}`, {
-			headers: {
-				authorization: `Bearer ${localStorage.getItem("token")}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setBids(data);
-			});
-	}, [user]);
+		axiosSecure.get(`/bids?email=${user.email}`).then((data) => {
+			setBids(data.data);
+		});
+	}, [user, axiosSecure]);
+
+	// useEffect(() => {
+	// 	fetch(`http://localhost:3000/bids?email=${user.email}`, {
+	// 		headers: {
+	// 			authorization: `Bearer ${localStorage.getItem("token")}`,
+	// 		},
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			setBids(data);
+	// 		});
+	// }, [user]);
 
 	// useEffect(() => {
 	// 	fetch(`http://localhost:3000/bids?email=${user.email}`, {

@@ -1,10 +1,14 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../contexts/AuthContext";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import useAxios from "../../hooks/useAxios";
 
 const CreateProduct = () => {
-	const { user } = use(AuthContext);
+	const { user } = useAuth();
+	// const axiosInstance = useAxios();
+	const axiosSecure = useAxiosSecure();
 
 	const [productCondition, setProductCondition] = useState(null);
 	const navigate = useNavigate();
@@ -44,28 +48,60 @@ const CreateProduct = () => {
 			seller_contact,
 		};
 
+		// Send Data Using useAxios custom hook
+		axiosSecure.post("/products", newProduct).then((data) => {
+			if (data.data.insertedId) {
+				e.target.reset();
+				navigate("/my-products");
+				Swal.fire({
+					position: "center",
+					icon: "success",
+					title: "Your Product has been saved",
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			}
+		});
+
+		// Send Data using axios
+		// axios
+		// 	.post("http://localhost:3000/products", newProduct)
+		// 	.then((data) => {
+		// 		if (data.data.insertedId) {
+		// 			e.target.reset();
+		// 			navigate("/my-products");
+		// 			Swal.fire({
+		// 				position: "center",
+		// 				icon: "success",
+		// 				title: "Your Product has been saved",
+		// 				showConfirmButton: false,
+		// 				timer: 1500,
+		// 			});
+		// 		}
+		// 	});
+
 		// Send Product Server side
-		fetch("http://localhost:3000/products", {
-			method: "post",
-			headers: {
-				"content-type": "application/json",
-			},
-			body: JSON.stringify(newProduct),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.insertedId) {
-					e.target.reset();
-					navigate("/my-products");
-					Swal.fire({
-						position: "center",
-						icon: "success",
-						title: "Your Product has been saved",
-						showConfirmButton: false,
-						timer: 1500,
-					});
-				}
-			});
+		// fetch("http://localhost:3000/products", {
+		// 	method: "post",
+		// 	headers: {
+		// 		"content-type": "application/json",
+		// 	},
+		// 	body: JSON.stringify(newProduct),
+		// })
+		// 	.then((res) => res.json())
+		// 	.then((data) => {
+		// 		if (data.insertedId) {
+		// 			e.target.reset();
+		// 			navigate("/my-products");
+		// 			Swal.fire({
+		// 				position: "center",
+		// 				icon: "success",
+		// 				title: "Your Product has been saved",
+		// 				showConfirmButton: false,
+		// 				timer: 1500,
+		// 			});
+		// 		}
+		// 	});
 	};
 
 	return (

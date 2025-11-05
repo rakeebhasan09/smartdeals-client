@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router";
 import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ProductDetails = () => {
 	const product = useLoaderData();
@@ -9,12 +10,19 @@ const ProductDetails = () => {
 	const { _id } = product;
 
 	useEffect(() => {
-		fetch(`http://localhost:3000/bids/${_id}`)
-			.then((res) => res.json())
-			.then((data) => {
-				setTotalBids(data);
-			});
+		axios.get(`http://localhost:3000/bids/${_id}`).then((data) => {
+			console.log(data);
+			setTotalBids(data.data);
+		});
 	}, [_id]);
+
+	// useEffect(() => {
+	// 	fetch(`http://localhost:3000/bids/${_id}`)
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			setTotalBids(data);
+	// 		});
+	// }, [_id]);
 
 	return (
 		<main>
