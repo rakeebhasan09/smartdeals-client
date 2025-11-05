@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
 			// jwt token request
 			// if (currentUser) {
 			// 	const loggedUser = { email: currentUser.email };
-			// 	fetch("http://localhost:3000/getToken", {
+			// 	fetch("https://smart-deals-server-kappa.vercel.app/getToken", {
 			// 		method: "post",
 			// 		headers: {
 			// 			"content-type": "application/json",

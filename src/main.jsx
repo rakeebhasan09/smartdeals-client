@@ -36,13 +36,18 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "all-products",
-				loader: () => fetch("http://localhost:3000/products"),
+				loader: () =>
+					fetch(
+						"https://smart-deals-server-kappa.vercel.app/products"
+					),
 				Component: AllProducts,
 			},
 			{
 				path: "product-details/:id",
 				loader: ({ params }) =>
-					fetch(`http://localhost:3000/products/${params.id}`),
+					fetch(
+						`https://smart-deals-server-kappa.vercel.app/products/${params.id}`
+					),
 				element: (
 					<PrivateRoute>
 						<ProductDetails />
@@ -76,7 +81,9 @@ const router = createBrowserRouter([
 			{
 				path: "edit-product/:id",
 				loader: ({ params }) =>
-					fetch(`http://localhost:3000/products/${params.id}`),
+					fetch(
+						`https://smart-deals-server-kappa.vercel.app/products/${params.id}`
+					),
 				element: (
 					<PrivateRoute>
 						<EditProduct />

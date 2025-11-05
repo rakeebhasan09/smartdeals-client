@@ -1,23 +1,21 @@
 import axios from "axios";
 import useAuth from "./useAuth";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const secureAxiosInstance = axios.create({
-	baseURL: "http://localhost:3000",
+	baseURL: "https://smart-deals-server-kappa.vercel.app",
 });
 
 const useAxiosSecure = () => {
 	const { user, logOut } = useAuth();
-	const interceptorAdded = useRef(false);
-
 	useEffect(() => {
-		if (interceptorAdded.current) return; // prevent multiple setups
-		interceptorAdded.current = true;
 		// Request Interceptor
 		const requestInterceptor = secureAxiosInstance.interceptors.request.use(
 			(config) => {
-				config.headers.authorization = `Bearer ${user.accessToken}`;
+				if (user?.accessToken) {
+					config.headers.Authorization = `Bearer ${user.accessToken}`;
+				}
 				return config;
 			}
 		);

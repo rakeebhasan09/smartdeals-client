@@ -2,7 +2,7 @@ import Hero from "./Hero/Hero";
 import RecentProducts from "./RecentProducts/RecentProducts";
 
 const recentProductsPromise = fetch(
-	"http://localhost:3000/recent-products"
+	"https://smart-deals-server-kappa.vercel.app/recent-products"
 ).then((res) => res.json());
 
 const Home = () => {

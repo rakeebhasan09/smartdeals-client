@@ -15,7 +15,7 @@ const MyBids = () => {
 	}, [user, axiosSecure]);
 
 	// useEffect(() => {
-	// 	fetch(`http://localhost:3000/bids?email=${user.email}`, {
+	// 	fetch(`https://smart-deals-server-kappa.vercel.app/bids?email=${user.email}`, {
 	// 		headers: {
 	// 			authorization: `Bearer ${localStorage.getItem("token")}`,
 	// 		},
@@ -27,7 +27,7 @@ const MyBids = () => {
 	// }, [user]);
 
 	// useEffect(() => {
-	// 	fetch(`http://localhost:3000/bids?email=${user.email}`, {
+	// 	fetch(`https://smart-deals-server-kappa.vercel.app/bids?email=${user.email}`, {
 	// 		headers: {
 	// 			authorization: `Bearer ${user.accessToken}`,
 	// 		},
@@ -50,9 +50,12 @@ const MyBids = () => {
 			confirmButtonText: "Yes, delete it!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				fetch(`http://localhost:3000/bids/${bidID}`, {
-					method: "delete",
-				})
+				fetch(
+					`https://smart-deals-server-kappa.vercel.app/bids/${bidID}`,
+					{
+						method: "delete",
+					}
+				)
 					.then((res) => res.json())
 					.then((data) => {
 						if (data.deletedCount) {

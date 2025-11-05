@@ -10,14 +10,15 @@ const ProductDetails = () => {
 	const { _id } = product;
 
 	useEffect(() => {
-		axios.get(`http://localhost:3000/bids/${_id}`).then((data) => {
-			console.log(data);
-			setTotalBids(data.data);
-		});
+		axios
+			.get(`https://smart-deals-server-kappa.vercel.app/bids/${_id}`)
+			.then((data) => {
+				setTotalBids(data.data);
+			});
 	}, [_id]);
 
 	// useEffect(() => {
-	// 	fetch(`http://localhost:3000/bids/${_id}`)
+	// 	fetch(`https://smart-deals-server-kappa.vercel.app/bids/${_id}`)
 	// 		.then((res) => res.json())
 	// 		.then((data) => {
 	// 			setTotalBids(data);

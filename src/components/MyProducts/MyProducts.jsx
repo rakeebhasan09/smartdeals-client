@@ -7,11 +7,14 @@ const MyProducts = () => {
 	const { user } = use(AuthContext);
 	const [myProducts, setMyProducts] = useState([]);
 	useEffect(() => {
-		fetch(`http://localhost:3000/my-products?email=${user.email}`, {
-			headers: {
-				authorization: `Bearer ${user.accessToken}`,
-			},
-		})
+		fetch(
+			`https://smart-deals-server-kappa.vercel.app/my-products?email=${user.email}`,
+			{
+				headers: {
+					authorization: `Bearer ${user.accessToken}`,
+				},
+			}
+		)
 			.then((res) => res.json())
 			.then((data) => setMyProducts(data));
 	}, [user]);
@@ -28,9 +31,12 @@ const MyProducts = () => {
 			confirmButtonText: "Yes, delete it!",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				fetch(`http://localhost:3000/products/${id}`, {
-					method: "delete",
-				})
+				fetch(
+					`https://smart-deals-server-kappa.vercel.app/products/${id}`,
+					{
+						method: "delete",
+					}
+				)
 					.then((res) => res.json())
 					.then((data) => {
 						if (data.deletedCount) {

@@ -7,11 +7,12 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CreateProduct = () => {
 	const { user } = useAuth();
+	const navigate = useNavigate();
 	// const axiosInstance = useAxios();
 	const axiosSecure = useAxiosSecure();
 
 	const [productCondition, setProductCondition] = useState(null);
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const handleCreateProduct = (e) => {
 		e.preventDefault();
 		const title = e.target.title.value;
@@ -65,7 +66,7 @@ const CreateProduct = () => {
 
 		// Send Data using axios
 		// axios
-		// 	.post("http://localhost:3000/products", newProduct)
+		// 	.post("https://smart-deals-server-kappa.vercel.app/products", newProduct)
 		// 	.then((data) => {
 		// 		if (data.data.insertedId) {
 		// 			e.target.reset();
@@ -81,7 +82,7 @@ const CreateProduct = () => {
 		// 	});
 
 		// Send Product Server side
-		// fetch("http://localhost:3000/products", {
+		// fetch("https://smart-deals-server-kappa.vercel.app/products", {
 		// 	method: "post",
 		// 	headers: {
 		// 		"content-type": "application/json",

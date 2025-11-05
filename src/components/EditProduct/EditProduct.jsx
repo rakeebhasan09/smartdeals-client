@@ -39,7 +39,7 @@ const EditProduct = () => {
 			seller_contact,
 		};
 
-		fetch(`http://localhost:3000/products/${_id}`, {
+		fetch(`https://smart-deals-server-kappa.vercel.app/products/${_id}`, {
 			method: "PATCH",
 			headers: {
 				"content-type": "application/json",

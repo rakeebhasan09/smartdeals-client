@@ -43,7 +43,7 @@ const RightSide = ({ product }) => {
 			status: "pending ",
 		};
 
-		fetch("http://localhost:3000/bids", {
+		fetch("https://smart-deals-server-kappa.vercel.app/bids", {
 			method: "post",
 			headers: {
 				"content-type": "application/json",
